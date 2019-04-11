@@ -23,7 +23,7 @@ RSpec.describe AnswersController, type: :controller do
     end
     context 'with incorrect params' do
       it 'doest not saves a new answer' do
-        expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) } }.to_not change(question.answers, :count)
+        expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) } }.to_not change(Answer, :count)
       end
 
       it 'render new' do
