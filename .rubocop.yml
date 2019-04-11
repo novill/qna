@@ -1,9 +1,0 @@
-AllCops:
-  Exclude:
-    - 'bin/'
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
