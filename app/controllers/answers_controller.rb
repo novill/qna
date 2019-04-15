@@ -1,22 +1,26 @@
 class AnswersController < ApplicationController
-  def new
-
-  end
+  before_action :authenticate_user!
 
   def create
-    @answer = question.answers.new(answer_params)
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.new(answer_params.merge(user: current_user))
     if @answer.save
-      redirect_to question
+      redirect_to @question
     else
-      render :new
+      render 'questions/show'
     end
   end
 
-  private
-
-  def question
-    @question ||= Question.find(params[:question_id])
+  def destroy
+    @answer = Answer.find(params[:id])
+    if current_user.author_of?(@answer)
+      @answer.destroy
+      flash[:notice] = 'Your answer successfully deleted.'
+    end
+    redirect_to @answer.question
   end
+
+  private
 
   def answer_params
     params.require(:answer).permit(:body)
