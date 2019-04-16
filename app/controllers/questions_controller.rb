@@ -28,22 +28,12 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def update
-    unless current_user&.author_of?(@question)
-      redirect_to @question
-      return
-    end
-
-    if @question.update(question_params)
-      redirect_to @question
-    else
-      render :edit
-    end
-  end
-
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Your question successfully deleted.'
+    if current_user&.author_of?(@question)
+      @question.destroy
+      flash[:notice] = 'Your question successfully deleted.'
+    end
+    redirect_to questions_path
   end
 
   private

@@ -102,82 +102,49 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'PATCH #update' do
-    context 'author' do
-      before { login(author) }
-
-      context 'with valid attributes' do
-        it 'assigns the requested question to @question' do
-          patch :update, params: { id: question, question: attributes_for(:question) }
-          expect(assigns(:question)).to eq question
-        end
-
-        it 'changes question attributes' do
-          patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }
-          question.reload
-
-          expect(question.title).to eq 'new title'
-          expect(question.body).to eq 'new body'
-        end
-
-        it 'redirects to updated question' do
-          patch :update, params: { id: question, question: attributes_for(:question) }
-          expect(response).to redirect_to question
-        end
-      end
-
-      context 'with invalid attributes' do
-        before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
-
-        it 'does not change question' do
-          old_title = question.title
-          old_body = question.body
-
-          question.reload
-
-          expect(question.title).to eq old_title
-          expect(question.body).to eq old_body
-        end
-
-        it 're-renders edit view' do
-          expect(response).to render_template :edit
-        end
-      end
-    end
-
-    it 'authenticated user but not author can\'t change question attributes' do
-      login(user)
-      old_title = question.title
-      old_body = question.body
-      patch :update, params: {id: question, question: { title: 'new title', body: 'new body' } }
-      question.reload
-      expect(question.title).to eq old_title
-      expect(question.body).to eq old_body
-    end
-
-    it 'guest can\'t change question attributes' do
-      old_title = question.title
-      old_body = question.body
-      patch :update, params: {id: question, question: { title: 'new title', body: 'new body' } }
-      question.reload
-      expect(question.title).to eq old_title
-      expect(question.body).to eq old_body
-    end
-  end
 
   describe 'DELETE #destroy' do
-    before { login(user) }
+    context 'author' do
+      before { login(user) }
 
-    let!(:question) { create(:question) }
+      let!(:question) { create(:question, user: user) }
 
-    it 'deletes the question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      it 'deletes the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirects to index' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'autenticated user, but not author' do
+      before { login(user) }
+
+      let!(:question) { create(:question) }
+
+      it "can't delete the question" do
+        expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context 'guest' do
+      let!(:question) { create(:question) }
+
+      it "can't delete the question" do
+        expect { delete :destroy, params: { id: question } }.not_to change(Question, :count)
+      end
+
+      it 'redirects to sign in' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to new_user_session_path
+      end
     end
   end
-
 end

@@ -12,6 +12,12 @@ RSpec.describe AnswersController, type: :controller do
           expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(question.answers, :count).by(1)
         end
 
+        it 'assings a new answer for author in the database' do
+          post :create, params: { question_id: question, answer: attributes_for(:answer) }
+          expect(user.author_of?(assigns(:answer))).to be_truthy
+
+        end
+
         it 'redirects to question' do
           post :create, params: { question_id: question, answer: attributes_for(:answer) }
           expect(response).to redirect_to question
@@ -37,4 +43,34 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'DELETE #destroy' do
+    let(:author) { create(:user) }
+    let!(:answer) { create(:answer, question: question, user: author) }
+
+    context 'author' do
+      it 'deletes answer' do
+        login(author)
+        expect { delete :destroy, params: {id: answer.id}}.to change(question.answers, :count).by(-1)
+      end
+
+      it 'redirects to question' do
+        login(author)
+        delete :destroy, params: {id: answer.id}
+        expect(response).to redirect_to question
+      end
+    end
+
+    context 'not author' do
+      it "can't delete question" do
+        login(user)
+        expect { delete :destroy, params: {id: answer.id}}.not_to change(Answer, :count)
+      end
+    end
+
+    context 'guest' do
+      it "can't delete question" do
+        expect { delete :destroy, params: {id: answer.id}}.not_to change(Answer, :count)
+      end
+    end
+  end
 end

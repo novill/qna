@@ -22,11 +22,11 @@ feature 'Authenticated user can write answer in question page', %q{
     sign_in(user)
     visit question_path(question)
     click_on 'Create'
-    expect(page).to have_content("Body can't be blank")
+    expect(page).to have_content "Body can't be blank"
   end
 
   scenario 'Non-authenticated user can\'t see answer form' do
     visit question_path(question)
-    expect(page).not_to have_button('Create')
+    expect(page).not_to have_button 'Create'
   end
 end

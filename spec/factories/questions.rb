@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :question do
     sequence(:title) { |i| "MyString #{i}" }
     body { "MyText" }
-    user { create(:user) }
+    user
 
     trait :invalid do
       title { nil }
