@@ -18,14 +18,14 @@ feature 'Authenticated user can write answer in question page', %q{
     expect(page).to have_current_path(question_path(question))
   end
 
-  scenario 'Authenticated user can\'t give incorrect answer the question but see validation errors' do
+  scenario "Authenticated user can't give incorrect answer the question but see validation errors" do
     sign_in(user)
     visit question_path(question)
     click_on 'Create'
     expect(page).to have_content "Body can't be blank"
   end
 
-  scenario 'Non-authenticated user can\'t see answer form' do
+  scenario "Non-authenticated user can't see answer form" do
     visit question_path(question)
     expect(page).not_to have_button 'Create'
   end

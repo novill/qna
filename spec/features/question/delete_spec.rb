@@ -18,13 +18,13 @@ feature 'Delete question', %q{
     expect(page).to have_current_path(questions_path)
   end
 
-  scenario 'Authenticated user, not author, can\'t see \'Delete question\' link' do
+  scenario "Authenticated user, not author, can't see 'Delete question' link" do
     sign_in(user)
     visit question_path(my_question)
     expect(page).not_to have_content 'Delete question'
   end
   #
-  scenario 'Guest can\'t see \'Delete question\' link' do
+  scenario "Guest can't see 'Delete question' link" do
     visit question_path(my_question)
     expect(page).not_to have_link 'Delete answer'
   end

@@ -14,8 +14,7 @@ RSpec.describe AnswersController, type: :controller do
 
         it 'assings a new answer for author in the database' do
           post :create, params: { question_id: question, answer: attributes_for(:answer) }
-          expect(user.author_of?(assigns(:answer))).to be_truthy
-
+          expect(user).to be_author_of(assigns(:answer))
         end
 
         it 'redirects to question' do
@@ -50,7 +49,7 @@ RSpec.describe AnswersController, type: :controller do
     context 'author' do
       it 'deletes answer' do
         login(author)
-        expect { delete :destroy, params: {id: answer.id}}.to change(question.answers, :count).by(-1)
+        expect { delete :destroy, params: {id: answer.id}}.to change(Answer, :count).by(-1)
       end
 
       it 'redirects to question' do
