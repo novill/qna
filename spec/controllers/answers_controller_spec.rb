@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let!(:my_answer) {create :answer, body: 'answer body 1', question: question, user: user}
 
   describe "POST #create" do
     context 'authenticated user' do
@@ -117,6 +118,32 @@ RSpec.describe AnswersController, type: :controller do
         expect{patch :update, params: { id: answer, answer: { body: 'new body' } }, format: :js}.not_to change(answer, :body)
       end
     end
-
   end
+
+  describe "POST #set_as_best" do
+    context "with question author" do
+      before { login(question.user) }
+
+      it "sets best flag" do
+        post :set_as_best, params: {id: my_answer }, format: :js
+        my_answer.reload
+        expect(my_answer).to be_best
+      end
+
+      it "renders set_as_best template" do
+        post :set_as_best, params: {id: my_answer }, format: :js
+        expect(response).to render_template :set_as_best
+      end
+    end
+
+    context "with other user" do
+      before { login(create :user) }
+      it "does not set best flag" do
+        post :set_as_best, params: {id: my_answer }, format: :js
+        my_answer.reload
+        expect(my_answer).to_not be_best
+      end
+    end
+  end
+
 end
