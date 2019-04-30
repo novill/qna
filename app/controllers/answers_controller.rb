@@ -12,14 +12,14 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer.update(answer_params)
+    if current_user&.author_of?(@answer)
+      @answer.update(answer_params)
+    end
     @question = @answer.question
   end
 
   def set_as_best
-    if current_user&.author_of?(@answer.question)
-      @answer.set_as_best
-    end
+    @answer.set_as_best if current_user&.author_of?(@answer.question)
   end
 
   private
