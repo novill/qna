@@ -147,4 +147,65 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #update' do
+    context 'author' do
+      before { login(user) }
+      let!(:question) { create(:question, user: user) }
+
+      context 'with valid attributes' do
+        it 'changes question attributes' do
+          patch :update, params: { id: question, question: {title: 'new title', body: 'new body' } }, format: :js
+          question.reload
+          expect(question.title).to eq 'new title'
+          expect(question.body).to eq 'new body'
+        end
+
+        it 'render update' do
+          patch :update, params: { id: question, question: {title: 'new title', body: 'new body' } }, format: :js
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+        it 'Don\'t change question attributes' do
+          old_title = question.title
+          old_body = question.body
+          patch :update, params: { id: question, question: {title: nil, body: nil } }, format: :js
+          question.reload
+          expect(question.title).to eq old_title
+          expect(question.body).to eq old_body
+        end
+      end
+    end
+    context 'not author' do
+      before { login(user) }
+      let!(:question) { create(:question) }
+
+      context 'with valid attributes' do
+        it "don't changes question attributes" do
+          old_title = question.title
+          old_body = question.body
+          patch :update, params: { id: question, question: {title: 'new title', body: 'new body' } }, format: :js
+          question.reload
+          expect(question.title).to eq old_title
+          expect(question.body).to eq old_body
+        end
+      end
+    end
+    context 'guest' do
+      let!(:question) { create(:question) }
+
+      context 'with valid attributes' do
+        it "don't changes question attributes" do
+          old_title = question.title
+          old_body = question.body
+          patch :update, params: { id: question, question: {title: 'new title', body: 'new body' } }, format: :js
+          question.reload
+          expect(question.title).to eq old_title
+          expect(question.body).to eq old_body
+        end
+      end
+    end
+  end
 end

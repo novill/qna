@@ -36,6 +36,10 @@ class QuestionsController < ApplicationController
     redirect_to questions_path
   end
 
+  def update
+    @question.update(question_params) if current_user&.author_of?(@question)
+  end
+
   private
 
   def load_question

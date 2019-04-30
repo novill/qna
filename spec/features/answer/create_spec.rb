@@ -9,16 +9,18 @@ feature 'Authenticated user can write answer in question page', %q{
   given(:user) {create(:user)}
   given(:question) { create(:question)}
 
-  scenario 'Authenticated user can see question page with title and body' do
+  scenario 'Authenticated user create answer', js: true do
     sign_in(user)
     visit question_path(question)
     fill_in 'Your answer', with: 'My Answer Body'
     click_on 'Create'
-    expect(page).to have_content 'My Answer Body'
+    within '.answers' do # чтобы убедиться, что ответ в списке, а не в форме
+      expect(page).to have_content 'My Answer Body'
+    end
     expect(page).to have_current_path(question_path(question))
   end
 
-  scenario "Authenticated user can't give incorrect answer the question but see validation errors" do
+  scenario "Authenticated user creates answer with errors", js: true do
     sign_in(user)
     visit question_path(question)
     click_on 'Create'

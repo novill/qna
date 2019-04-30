@@ -1,14 +1,33 @@
-h1= @question.title
-p= @question.body
+.question-errors
+  = render 'shared/errors', resource: @answer
+
+.question
+  p.title= @question.title
+  p.body= @question.body
+
 - if current_user&.author_of?(@question)
+  p= link_to 'Edit question', '#', class: 'edit-question-link'
+  = form_with model: @question, class: ['hidden','question-edit'], remote: true do |f|
+    .question-errors
+    p
+      = f.label :title, 'Question title'
+      = f.text_field :title
+    p
+      = f.label :body, 'Question body'
+      = f.text_area :body
+    = f.submit 'Save question'
   p= link_to 'Delete question', @question, method: :delete
 
-= render @question.answers
+hr
 
-= render 'shared/errors', resource: @answer
+.answers
+  = render @question.answers
+
+.answer-errors
+  = render 'shared/errors', resource: @answer
 
 - if user_signed_in?
-  = form_with model: [@question, @answer], local: true do |f|
+  = form_with model: [@question, @answer], class: 'new-answer' do |f|
     = f.label :body, 'Your answer'
     = f.text_area :body
     = f.submit 'Create'
