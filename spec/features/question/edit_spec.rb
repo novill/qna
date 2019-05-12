@@ -9,7 +9,7 @@ feature 'User can edit his question', %q{
   given(:question) { create(:question, user: user) }
   given(:another_user) { create(:user) }
 
-  scenario 'Author can edit his question', js:true do
+  scenario 'Author can edit his question', js: true do
     sign_in(user)
     visit question_path question
     click_on 'Edit question'
@@ -22,6 +22,20 @@ feature 'User can edit his question', %q{
     expect(page).to_not have_content question.body
     expect(page).to have_content 'edited question title'
     expect(page).to have_content 'edited question body'
+  end
+
+  scenario 'Author can add files while edit his question', js: true do
+    sign_in(user)
+    visit question_path question
+    click_on 'Edit question'
+    within '.question-edit' do
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+    end
+
+    click_on 'Save question'
+
+    expect(page).to have_link 'rails_helper.rb'
+    expect(page).to have_link 'spec_helper.rb'
   end
 
   scenario "Not author can't see edit link for question" do

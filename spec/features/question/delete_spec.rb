@@ -7,7 +7,7 @@ feature 'Delete question', %q{
 } do
   given(:author) { create(:user) }
   given(:user) { create(:user) }
-  given(:my_question) { create(:question, user: author) }
+  given(:my_question) { create(:question, :with_file, user: author) }
 
   scenario 'Authenticated author deletes question' do
     sign_in(author)
@@ -16,6 +16,14 @@ feature 'Delete question', %q{
     expect(page).to have_content 'Your question successfully deleted.'
     expect(page).not_to have_content my_question.title
     expect(page).to have_current_path(questions_path)
+  end
+
+  scenario 'Authenticated author deletes file of question' do
+    sign_in(author)
+    visit question_path(my_question)
+    expect(page).to have_content my_question.files[0].filename.to_s
+    click_on 'X'
+    expect(page).not_to have_content my_question.files[0].filename.to_s
   end
 
   scenario "Authenticated user, not author, can't see 'Delete question' link" do
