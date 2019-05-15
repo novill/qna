@@ -1,8 +1,8 @@
 $('<%= ".error-answer-#{@answer.id}" %>').html('<%= render 'shared/errors', resource: @answer %>');
 <% unless @answer.errors.present? %>
+  $('<%= "#answer-#{@answer.id} p.body" %>').html('<%= @answer.body %>');
+  $('<%= "#answer-#{@answer.id} p.files" %>').html('<%= render 'shared/files', resource: @answer %>');
 
-$('<%= "#answer-#{@answer.id} p.body" %>').html('<%= @answer.body %>');
   $('<%= "form#edit-answer-#{@answer.id}" %>').addClass('hidden');
-  $('<%= "#answer-#{@answer.id}" %> .edit-answer-link').removeClass('hidden');
   $('<%= "#answer-#{@answer.id}" %> .edit-answer-link').removeClass('hidden');
 <% end %>

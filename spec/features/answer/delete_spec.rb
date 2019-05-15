@@ -8,7 +8,7 @@ feature 'Delete answer', %q{
   given(:author) { create(:user) }
   given(:user) { create(:user) }
   given(:question) { create(:question) }
-  given!(:my_answer) { create(:answer, question: question, user: author) }
+  given!(:my_answer) { create(:answer, :with_file, question: question, user: author) }
 
   scenario 'Authenticated author deletes answer', js: true do
     sign_in(author)
@@ -16,6 +16,14 @@ feature 'Delete answer', %q{
     click_on 'Delete answer'
     expect(page).not_to have_content my_answer.body
     expect(page).to have_current_path question_path(question)
+  end
+
+  scenario 'Authenticated author deletes file of answer' do
+    sign_in(author)
+    visit question_path(question)
+    expect(page).to have_content my_answer.files[0].filename.to_s
+    click_on 'X'
+    expect(page).not_to have_content my_answer.files[0].filename.to_s
   end
 
   scenario "Authenticated user, not author, can't see 'Delete answer' link" do

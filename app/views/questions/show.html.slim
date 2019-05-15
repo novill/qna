@@ -4,6 +4,7 @@
 .question
   p.title= @question.title
   p.body= @question.body
+  p.files= render 'shared/files', resource: @question
 
 - if current_user&.author_of?(@question)
   p= link_to 'Edit question', '#', class: 'edit-question-link'
@@ -15,6 +16,10 @@
     p
       = f.label :body, 'Question body'
       = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true, direct_upload: true
+
     = f.submit 'Save question'
   p= link_to 'Delete question', @question, method: :delete
 
@@ -30,4 +35,7 @@ hr
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
     = f.label :body, 'Your answer'
     = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true
     = f.submit 'Create'
