@@ -10,7 +10,7 @@ feature 'User can add links to answer', %q{
   given!(:question) {create(:question)}
   given(:gist_url) {'https://gist.github.com/novill/ca4a01934576cc036c49b2faa2900f3c'}
 
-  scenario 'User adds link when give an answer', js: true do
+  scenario 'User adds gist link when give an answer', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -27,7 +27,28 @@ feature 'User can add links to answer', %q{
     click_on 'Create'
 
     within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_content 'Test gist body 1'
+    end
+  end
+
+  scenario 'User adds non-gist link when give an answer', js: true do
+    sign_in(user)
+
+    visit question_path(question)
+
+    fill_in 'Your answer', with: 'My answer'
+
+    click_on 'Add link'
+
+    fill_in 'Link name', with: 'My test url'
+    fill_in 'Url', with: 'http://example.com'
+
+    expect(page).to have_link 'Add link'
+
+    click_on 'Create'
+
+    within '.answers' do
+      expect(page).to have_link 'My test url', href: 'http://example.com'
     end
   end
 
