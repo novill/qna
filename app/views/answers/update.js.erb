@@ -2,6 +2,7 @@ $('<%= ".error-answer-#{@answer.id}" %>').html('<%= render 'shared/errors', reso
 <% unless @answer.errors.present? %>
   $('<%= "#answer-#{@answer.id} p.body" %>').html('<%= @answer.body %>');
   $('<%= "#answer-#{@answer.id} p.files" %>').html('<%= render 'shared/files', resource: @answer %>');
+  $('<%= "#answer-#{@answer.id} p.links" %>').html('<%= render 'shared/links', resource: @answer %>');
 
   $('<%= "form#edit-answer-#{@answer.id}" %>').addClass('hidden');
   $('<%= "#answer-#{@answer.id}" %> .edit-answer-link').removeClass('hidden');
