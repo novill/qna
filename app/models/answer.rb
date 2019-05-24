@@ -14,6 +14,7 @@ class Answer < ApplicationRecord
 
   def set_as_best
     question.answers.update_all("best = (id=#{id})")
+    question.reward&.update!(user: user)
     reload
   end
 end
