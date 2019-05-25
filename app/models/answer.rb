@@ -13,8 +13,10 @@ class Answer < ApplicationRecord
   default_scope { order(best: :DESC) }
 
   def set_as_best
-    question.answers.update_all("best = (id=#{id})")
-    question.reward&.update!(user: user)
+    transaction do
+      question.answers.update_all("best = (id=#{id})")
+      question.reward&.update!(user: user)
+    end
     reload
   end
 end
