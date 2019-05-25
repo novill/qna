@@ -130,6 +130,12 @@ RSpec.describe AnswersController, type: :controller do
         expect(my_answer).to be_best
       end
 
+      it 'assigns reward to user' do
+        reward = create(:reward, question: question)
+        patch :set_as_best, params: {id: my_answer}, format: :js
+        expect{reward.reload}.to change(reward, :user).from(nil).to(my_answer.user)
+      end
+
       it "renders set_as_best template" do
         post :set_as_best, params: {id: my_answer }, format: :js
         expect(response).to render_template :set_as_best

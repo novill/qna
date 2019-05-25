@@ -11,5 +11,9 @@ FactoryBot.define do
     trait :with_file do
       files { fixture_file_upload(Rails.root.join('spec', 'rails_helper.rb'), 'rails_helper.rb') }
     end
+
+    trait :with_link do
+      links { [create(:link)] }
+    end
   end
 end

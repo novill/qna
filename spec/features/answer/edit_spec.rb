@@ -41,15 +41,25 @@ feature 'User can edit his answer', %q{
 
       within '.answers' do
         attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb"]
-        # attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
         click_on 'Save'
 
         expect(page).to have_link 'rails_helper.rb'
-        # expect(page).to have_link 'spec_helper.rb'
-
-        click_on 'X'
-        expect(page).not_to have_link 'rails_helper.rb'
       end
+    end
+
+    scenario 'add links while editing his answer', js: true do
+      sign_in user
+      visit question_path(question)
+
+      click_on 'Edit'
+
+      within '.answers' do
+        click_on 'Add link'
+        fill_in 'Link name', with: 'My test url'
+        fill_in 'Url', with: 'http://example.com'
+        click_on 'Save'
+      end
+      expect(page).to have_link 'My test url', href: 'http://example.com'
     end
 
     scenario 'edits his answer with errors', js: true do

@@ -38,6 +38,22 @@ feature 'User can edit his question', %q{
     expect(page).to have_link 'spec_helper.rb'
   end
 
+  scenario 'Author can add links while edit his question', js: true do
+    sign_in(user)
+    visit question_path question
+    click_on 'Edit question'
+    within '.question-edit' do
+      click_on 'Add link'
+
+      fill_in 'Link name', with: 'My test url'
+      fill_in 'Url', with: 'http://example.com'
+    end
+
+    click_on 'Save question'
+
+    expect(page).to have_link 'My test url', href: 'http://example.com'
+  end
+
   scenario "Not author can't see edit link for question" do
     sign_in(another_user)
     visit question_path question

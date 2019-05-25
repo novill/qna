@@ -1,27 +1,23 @@
 .question-errors
-  = render 'shared/errors', resource: @answer
+  = render 'shared/errors', resource: @question
 
 .question
   p.title= @question.title
   p.body= @question.body
   p.files= render 'shared/files', resource: @question
+  .links= render 'shared/links', resource: @question
 
 - if current_user&.author_of?(@question)
   p= link_to 'Edit question', '#', class: 'edit-question-link'
   = form_with model: @question, class: ['hidden','question-edit'], remote: true do |f|
     .question-errors
-    p
-      = f.label :title, 'Question title'
-      = f.text_field :title
-    p
-      = f.label :body, 'Question body'
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true
-
+    = render 'fields', f: f
     = f.submit 'Save question'
   p= link_to 'Delete question', @question, method: :delete
+- if @question.reward.present?
+  p
+    = 'Question has reward'
+    = image_tag url_for(@question.reward.image)
 
 hr
 
@@ -33,9 +29,5 @@ hr
 
 - if user_signed_in?
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
-    = f.label :body, 'Your answer'
-    = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true
+    = render 'answers/fields', f: f
     = f.submit 'Create'

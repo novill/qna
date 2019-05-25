@@ -7,7 +7,8 @@ feature 'Set best answer', %q{
 } do
   given(:question_author) { create(:user) }
   given(:question) { create(:question, user: question_author) }
-  given!(:first_answer) { create(:answer, body: 'first answer body', question: question) }
+  given(:answer_author) { create(:user) }
+  given!(:first_answer) { create(:answer, body: 'first answer body', question: question, user: answer_author) }
 
   scenario 'Question author can mark best answer', :js do
     sign_in(question_author)
@@ -17,6 +18,16 @@ feature 'Set best answer', %q{
     expect(page).to have_content 'Best answer'
   end
 
+  scenario 'Author of best answer gets reward', :js do
+    reward = create(:reward, question: question)
+    first_answer.set_as_best
+
+    sign_in(answer_author)
+
+    visit rewards_path
+    expect(page).to have_content reward.title
+    expect(page).to have_content reward.question.title
+  end
 
   context 'after one answer choosen as best' do
     given!(:second_answer) { create(:answer, body: 'second answer body', question: question) }
@@ -49,8 +60,6 @@ feature 'Set best answer', %q{
     end
 
   end
-
-
 
   scenario 'Another authenticated user can\'t set best answer' do
     sign_in(create(:user))
