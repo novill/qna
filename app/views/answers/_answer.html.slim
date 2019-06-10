@@ -12,6 +12,9 @@
     - else
       - if current_user&.author_of?(answer.question)
         p= link_to 'Mark as best', set_as_best_answer_path(id: answer.id), remote: true, method: :post
+      .vote_links= render 'shared/vote_links', resource: answer
+      p.answer_rating
+        = "Rating #{answer.rating}"
 
     div class="error-answer-#{answer.id}"
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
