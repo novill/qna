@@ -33,7 +33,7 @@ module Votable
 
     cur_vote = votes.find_by(user: voter)
     if cur_vote
-      cur_vote.update_attributes(value: value)
+      cur_vote.update!(value: value)
     else
       votes.create!(value: value, user: voter)
     end
