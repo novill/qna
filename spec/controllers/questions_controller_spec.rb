@@ -193,4 +193,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'voted' do
+    let(:resource) { create(:question) }
+  end
 end
