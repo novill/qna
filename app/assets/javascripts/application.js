@@ -16,4 +16,8 @@
 //= require jquery3
 //= require twitter/bootstrap
 //= require cocoon
+//= require action_cable
 //= require_tree .
+
+var App = App || {};
+App.cable = ActionCable.createConsumer();

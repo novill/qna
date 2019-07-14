@@ -17,4 +17,14 @@ $(document).on('turbolinks:load', function(){
       $('.question a.vote_back').addClass('hidden');
     }
   });
+
+  App.cable.subscriptions.create('QuestionsChannel', {
+    connected: function() {
+       return this.perform('follow' )
+    },
+    received: function(data) {
+      console.log(data);
+      return $('.questions').append(data);
+    }
+  });
 });
