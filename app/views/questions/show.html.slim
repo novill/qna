@@ -1,7 +1,7 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-.question
+.question id="question-#{@question.id}"
   p.title= @question.title
   p.body= @question.body
   p.files= render 'shared/files', resource: @question

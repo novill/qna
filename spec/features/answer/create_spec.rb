@@ -45,4 +45,49 @@ feature 'Authenticated user can write answer in question page', %q{
     visit question_path(question)
     expect(page).not_to have_button 'Create'
   end
+
+  context 'multiple sessions', js: true do
+    let(:second_user) {create(:user)}
+    scenario 'answer appears on another user\'s page' do
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('second_user') do
+        sign_in(second_user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in 'Your answer', with: 'My Answer Body'
+        click_on 'Create'
+
+        within '.answers' do
+          expect(page).to have_content 'My Answer Body'
+          expect(page).not_to have_link('Up')
+          expect(page).not_to have_link('Down')
+        end
+      end
+
+      Capybara.using_session('second_user') do
+        within '.answers' do
+          expect(page).to have_content 'My Answer Body'
+          expect(page).to have_link('Up')
+          expect(page).to have_link('Down')
+        end
+      end
+      Capybara.using_session('guest') do
+        within '.answers' do
+          expect(page).to have_content 'My Answer Body'
+          expect(page).not_to have_link('Up')
+          expect(page).not_to have_link('Down')
+        end
+      end
+    end
+  end
 end
