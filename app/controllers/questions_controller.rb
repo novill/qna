@@ -1,7 +1,8 @@
 class QuestionsController < ApplicationController
   include Voted
+  protect_from_forgery except: :add_another_answer
 
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show, :add_another_answer]
   before_action :load_question, only: [:show, :update, :destroy]
 
   after_action :publish_question, only: [:create]
@@ -41,6 +42,11 @@ class QuestionsController < ApplicationController
 
   def update
     @question.update(question_params) if current_user&.author_of?(@question)
+  end
+
+  def add_another_answer
+    @answer = Answer.find(params[:answer_id])
+    render partial: 'answers/answer', locals: {answer: @answer}
   end
 
   private

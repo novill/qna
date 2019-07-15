@@ -4,6 +4,8 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_answer, only: %i[update destroy set_as_best]
 
+  after_action :publish_answer, only: [:create]
+
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.create(answer_params.merge(user: current_user))
@@ -25,6 +27,15 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+        "answers_question_#{@question.id}",
+        answer_id: @answer.id
+        )
+  end
 
   def answer_params
     params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
