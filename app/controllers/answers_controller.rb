@@ -33,8 +33,10 @@ class AnswersController < ApplicationController
 
     ActionCable.server.broadcast(
         "answers_question_#{@question.id}",
-        answer_id: @answer.id
-        )
+        answer: @answer,
+        answer_id: @answer.id,
+        links: @answer.links
+    )
   end
 
   def answer_params

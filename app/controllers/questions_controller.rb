@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   protect_from_forgery except: :add_another_answer
 
   before_action :authenticate_user!, except: [:index, :show, :add_another_answer]
-  before_action :load_question, only: [:show, :update, :destroy]
+  before_action :load_question, only: [:show, :update, :destroy, :comment]
 
   after_action :publish_question, only: [:create]
 
@@ -49,6 +49,12 @@ class QuestionsController < ApplicationController
     render partial: 'answers/answer', locals: {answer: @answer}
   end
 
+  def comment
+    comment = @question.comments.create(body: params[:body], user: current_user)
+
+    render json: comment
+  end
+
   private
 
   def publish_question
@@ -65,6 +71,8 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.with_attached_files.find(params[:id])
+    gon.question_id = @question.id
+    gon.question_user_id = @question.user_id
   end
 
   def question_params

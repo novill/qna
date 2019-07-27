@@ -1,5 +1,5 @@
 - if answer.persisted?
-  div[id = "answer-#{answer.id}"]
+  .answer [id = "answer-#{answer.id}"]
     p.body= answer.body
     p.files= render 'shared/files', resource: answer
     .links= render 'shared/links', resource: answer
@@ -15,6 +15,15 @@
       .vote_links= render 'shared/vote_links', resource: answer
       p.answer_rating
         = "Rating #{answer.rating}"
+    .comments
+      ul
+        = render answer.comments
+
+      = form_with url: answer_comments_path(answer) do |f|
+        .field
+          = f.label :body, 'Comment body'
+          = f.text_field :body
+        = f.submit 'Save comment'
 
     div class="error-answer-#{answer.id}"
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|

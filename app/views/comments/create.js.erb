@@ -1,0 +1,2 @@
+$('<%= "##{@resource.class.to_s.downcase}-#{@resource.id} .comments ul" %>').append('<%= j render @comment %>')
+$('<%= "##{@resource.class.to_s.downcase}-#{@resource.id} .comments #body" %>').val('')

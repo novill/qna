@@ -9,7 +9,7 @@ $(document).on('turbolinks:load', function(){
   $('.answers').on('ajax:success', function (e) {
     var details = e.detail[0];
 
-    if (details['id']) {
+    if (details['id'] && details['rating']) {
       var answer_path = '#answer-' + details['id']
 
       $(answer_path + ' p.answer_rating').html('Rating ' + details['rating'])
@@ -26,17 +26,24 @@ $(document).on('turbolinks:load', function(){
   App.cable.subscriptions.create('AnswersChannel', {
     connected: function() {
       return this.perform('follow', {
-        question_id: $('.question').attr('id')
+        question_id: gon.question_id
       });
     },
     received: function(server_data) {
-      console.log(server_data);
+      console.log(server_data)
       if (server_data['answer_id']) {
-        console.log(server_data);
-        $.get("/add_another_answer/" + server_data['answer_id'], function (data) {
-          $(".answers").append(data);
-        });
+        if (server_data.answer.user_id != gon.user_id) {
+          // $('.answers').append(JST["templates/answer"](server_data))
+
+          $.get("/add_another_answer/" + server_data['answer_id'], function (data) {
+            $(".answers").append(data);
+          });
+        }
       }
+      // if (server_data.answer.user_id != gon.user_id) {
+      //   $('.answers').append(JST["templates/answer"](server_data))
+      // }
+
     }
   });
 
