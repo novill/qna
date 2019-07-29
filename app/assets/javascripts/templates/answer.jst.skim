@@ -1,0 +1,19 @@
+div.answer [id = "answer-#{@answer.id}"]
+  p.body= @answer.body
+
+  div.vote_links
+    - if gon.user_id && !(gon.user_id == @answer.user_id)
+      div.vote
+      p.answer_rating
+        = "Rating 0"
+
+  div.answer_links
+  - if @links.length
+    p Links:
+    ul
+    - @links.forEach (link) ->
+      a href=link.url link.name
+hr
+
+
+
