@@ -7,16 +7,9 @@ $(document).on('turbolinks:load', function(){
       });
     },
     received: function(server_data) {
-      if (server_data['resource_id']) {
-          console.log(server_data)
-          // $('.answers').append(JST["templates/answer"](server_data))
-
-          $.get("/add_another_answer/" + server_data['answer_id'], function (data) {
-            $(".answers").append(data);
-          });
-        }
-        if (server_data['comment_id']) {
-
+      if (server_data['comment_resource_id']) {
+        if (gon.user_id != server_data['comment_user_id'])
+          $('#' + server_data['comment_resource_id'] + ' .comments ul').append(server_data['comment_html'])
         }
       }
     });

@@ -1,4 +1,4 @@
-class CommmentsChannel < ApplicationCable::Channel
+class CommentsChannel < ApplicationCable::Channel
   def follow(data)
     question_id = data['question_id']
     channel_name = "comments_question_#{question_id}"
