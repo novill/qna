@@ -2,17 +2,13 @@ div.answer [id = "answer-#{@answer.id}"]
   p.body= @answer.body
 
   div.vote_links
-    - if gon.user_id && !(gon.user_id == @answer.user_id)
       div.vote
+        a href="/answers/#{@answer.id}/vote_back" data-method="post" data-remote="true" data-type="json" class='vote_back hidden' Vote back
+        a href="/answers/#{@answer.id}/upvote" data-method="post" data-remote="true" data-type="json" class='vote' Up
+        a href="/answers/#{@answer.id}/downvote" data-method="post" data-remote="true" data-type="json" class='vote' Down
       p.answer_rating
         Rating 0
 
-  div.answer_links
-  - if @links.length
-    p Links:
-    ul
-    - @links.forEach (link) ->
-      a href=link.url link.name
 hr
 
 

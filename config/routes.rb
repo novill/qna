@@ -26,7 +26,5 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'add_another_answer/:answer_id', to: 'questions#add_another_answer', as: :add_another_answer
-
   mount ActionCable.server => "/cable"
 end

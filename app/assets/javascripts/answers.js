@@ -31,11 +31,11 @@ $(document).on('turbolinks:load', function(){
     received: function(server_data) {
       if (server_data['answer_id']) {
         if (server_data.answer.user_id != gon.user_id) {
-          // $('.answers').append(JST["templates/answer"](server_data))
+          $('.answers').append(JST["templates/answer"](server_data))
 
-          $.get("/add_another_answer/" + server_data['answer_id'], function (data) {
-            $(".answers").append(data);
-          });
+          // $.get("/add_another_answer/" + server_data['answer_id'], function (data) {
+          //   $(".answers").append(data);
+          // });
         }
       }
     }
