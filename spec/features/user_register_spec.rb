@@ -16,4 +16,22 @@ feature 'User register',%q{
     expect(page).to have_content ' You have signed up successfully.'
     expect(current_path).to eq root_path
   end
+
+  scenario 'Non-registered user try to sign in with github' do
+    visit new_user_session_path
+    expect(page).to have_link'Sign in with GitHub'
+    mock_auth_hash
+    click_link 'Sign in with GitHub'
+    expect(page).to have_content 'Successfully authenticated from Github account.'
+    expect(current_path).to eq root_path
+  end
+
+  scenario 'Non-registered user try to sign in with Digitalocean' do
+    visit new_user_session_path
+    expect(page).to have_link'Sign in with Digitalocean'
+    mock_auth_hash
+    click_link 'Sign in with Digitalocean'
+    expect(page).to have_content 'Successfully authenticated from Digitalocean account.'
+    expect(current_path).to eq root_path
+  end
 end

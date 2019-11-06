@@ -8,4 +8,8 @@ FactoryBot.define do
     password { '12345678' }
     password_confirmation { '12345678' }
   end
+
+  factory :oauth_user, parent: :user do
+    email { 'user_oauth@test.com' }
+  end
 end
