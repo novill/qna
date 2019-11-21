@@ -23,6 +23,7 @@ gem "skim"
 gem "omniauth"
 gem "omniauth-github"
 gem "omniauth-digitalocean"
+gem 'cancancan'
 
 
 group :development, :test do

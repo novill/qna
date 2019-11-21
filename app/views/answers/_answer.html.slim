@@ -4,7 +4,7 @@
     p.files= render 'shared/files', resource: answer
     .links= render 'shared/links', resource: answer
 
-    - if current_user&.author_of?(answer)
+    - if can?(:update, answer)
       p= link_to 'Delete answer', answer, method: :delete, remote: true
       p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
     - if answer.best

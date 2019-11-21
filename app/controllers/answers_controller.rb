@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  authorize_resource
+
   include Voted
 
   before_action :authenticate_user!
