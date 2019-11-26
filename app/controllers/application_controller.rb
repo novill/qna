@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.html { redirect_to questions_path, alert: exception.message }
-      format.json { head :forbidden, content_type: 'text/html' }
-      format.js { head :forbidden, content_type: 'text/html' }
+      format.json { head :forbidden }
+      format.js { head :forbidden }
     end
 
   end

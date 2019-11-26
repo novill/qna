@@ -1,6 +1,5 @@
 class AnswersController < ApplicationController
 
-  include Voted
 
   before_action :authenticate_user!
   before_action :load_answer, only: %i[update destroy set_as_best]
@@ -8,6 +7,8 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: [:create]
 
   authorize_resource
+
+  include Voted
 
   def create
     @question = Question.find(params[:question_id])
