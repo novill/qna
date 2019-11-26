@@ -50,8 +50,22 @@ describe Ability, type: :model do
     end
 
     context 'vote' do
-      it { should be_able_to [:upvote, :downvote, :vote_back], other_answer }
-      it { should be_able_to [:upvote, :downvote, :vote_back], user_answer }
+      it { should be_able_to [:upvote, :downvote], other_answer }
+      it { should_not be_able_to [:upvote, :downvote, :vote_back], user_answer }
+      it 'should can vote back after voting' do
+        other_answer.upvote(user)
+        is_expected.to be_able_to(:vote_back, other_answer)
+      end
+    end
+
+    context 'attachments' do
+      let(:user) { create :user }
+      let(:other) { create :user }
+      let(:user_question) { create( :question, user: user) }
+      let(:other_question) { create( :question, user: other) }
+      it { should be_able_to :destroy, user_question }
+      it { should_not be_able_to :destroy, other_question }
+
     end
   end
 end

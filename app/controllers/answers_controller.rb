@@ -1,5 +1,4 @@
 class AnswersController < ApplicationController
-  authorize_resource
 
   include Voted
 
@@ -7,6 +6,8 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: %i[update destroy set_as_best]
 
   after_action :publish_answer, only: [:create]
+
+  authorize_resource
 
   def create
     @question = Question.find(params[:question_id])

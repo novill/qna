@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-
   include Voted
   protect_from_forgery except: :add_another_answer
 
