@@ -33,10 +33,10 @@ Rails.application.routes.draw do
         get :me, on: :collection
         get :others, on: :collection
       end
-      resources :questions, only: [:index, :show] do
+      resources :questions, only: [:index, :show, :create, :update, :destroy ] do
+        resources :answers, only: [:show, :create, :update, :destroy ], shallow: true
         get :answers, on: :member
       end
-      resources :answers, only: [:show]
     end
   end
   mount ActionCable.server => "/cable"

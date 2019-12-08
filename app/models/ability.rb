@@ -9,6 +9,7 @@ class Ability
     @user = user
 
     if user
+      # puts __method__, user.inspect, '===='
       user.admin? ? admin_abilities : user_abilities
     else
       guest_abilities
@@ -17,16 +18,20 @@ class Ability
 
   def guest_abilities
     can :read, :all
+    can :answers, Question
   end
 
   def admin_abilities
     can :manage, :all
+    can [:update, :destroy], [Question, Answer, Link]
   end
 
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment, Link]
-    can [:update, :destroy], [Question, Answer, Link], user_id: user.id
+    can [:update, :destroy], [Question, Answer, Link] do |thing|
+      @user.author_of?(thing)
+    end
 
     can :destroy, ActiveStorage::Attachment, [Question, Answer] do |attachable|
       user.author_of?(attachable)

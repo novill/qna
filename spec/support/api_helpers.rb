@@ -5,6 +5,9 @@
        "ACCEPT" => 'application/json'}
     end
 
+    def api_form_headers
+      api_headers.merge('Content-Type' => 'application/x-www-form-urlencoded')
+    end
     def json
       @json ||= JSON.parse(response.body) if response && !response.body.blank?
     end
