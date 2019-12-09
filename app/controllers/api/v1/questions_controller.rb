@@ -21,28 +21,28 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   def create
     @question = current_resource_owner.questions.new(question_params)
     if @question.save
-      render json: @question, status: 201
+      render json: @question, status: :created
     else
-      render json: @question.errors, status: 400
+      render json: @question.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    render plain: '', status: 401 and return unless @question
+    head :not_found and return unless @question
 
     if @question.update(question_params)
-      render json: @question, status: 201
+      render json: @question, status: :accepted
     else
-      render json: @question.errors, status: 400
+      render json: @question.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    render plain: '', status: 401 and return unless @question
+    head :not_found and return unless @question
     if @question.delete
-      render json: @question, status: 201
+      render json: @question, status: :accepted
     else
-      render json: @question.errors, status: 400
+      render json: @question.errors, status: :unprocessable_entity
     end
   end
 

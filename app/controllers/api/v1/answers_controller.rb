@@ -14,29 +14,29 @@ class Api::V1::AnswersController < Api::V1::BaseController
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
-      render json: @answer, status: 201
+      render json: @answer, status: :created
     else
-      render json: @answer.errors, status: 400
+      render json: @answer.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    render plain: '', status: 401 and return unless @answer
+    head :not_found and return unless @answer
 
     if @answer.update(answer_params)
-      render json: @answer, status: 201
+      render json: @answer, status: :accepted
     else
-      render json: @answer.errors, status: 400
+      render json: @answer.errors, status: :unprocessable_entity
     end
 
   end
 
   def destroy
-    render plain: '', status: 401 and return unless @answer
+    head :not_found and return unless @answer
     if @answer.delete
-      render json: @answer, status: 201
+      render json: @answer, status: :accepted
     else
-      render json: @answer.errors, status: 400
+      render json: @answer.errors, status: :unprocessable_entity
     end
 
   end
