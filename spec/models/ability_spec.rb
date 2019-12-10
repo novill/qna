@@ -2,7 +2,7 @@ require 'rails_helper'
 require "cancan/matchers"
 
 describe Ability, type: :model do
-  subject(:ability) { Ability.new(user) }
+  subject(:ity) { Ability.new(user) }
 
   describe 'for guest' do
     let(:user) { nil }

@@ -24,6 +24,9 @@ gem "omniauth"
 gem "omniauth-github"
 gem "omniauth-digitalocean"
 gem 'cancancan'
+gem 'doorkeeper'
+gem 'active_model_serializers', '~> 0.10'
+gem 'oj'
 
 
 group :development, :test do
