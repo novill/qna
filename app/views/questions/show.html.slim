@@ -9,7 +9,7 @@
   .vote_links= render 'shared/vote_links', resource: @question
   p.question_rating
     = "Rating #{@question.rating}"
-
+  p.subscription = render 'subscriptions/subscription'
   .comments
     ul
       = render @question.comments

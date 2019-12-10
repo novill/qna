@@ -33,7 +33,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def destroy
     head :not_found and return unless @answer
-    if @answer.delete
+    if @answer.destroy
       render json: @answer, status: :accepted
     else
       render json: @answer.errors, status: :unprocessable_entity

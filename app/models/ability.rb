@@ -28,7 +28,7 @@ class Ability
 
   def user_abilities
     guest_abilities
-    can :create, [Question, Answer, Comment, Link]
+    can :create, [Question, Answer, Comment, Link, Subscription]
     can [:update, :destroy], [Question, Answer, Link] do |thing|
       @user.author_of?(thing)
     end
@@ -36,6 +36,9 @@ class Ability
     can :destroy, ActiveStorage::Attachment, [Question, Answer] do |attachable|
       user.author_of?(attachable)
     end
+
+    can :destroy, Subscription, user_id: user.id
+
 
     can [:upvote, :downvote], [Question, Answer] do |votable|
       !user.author_of?(votable) && !votable.votes.exists?(user_id: user.id)

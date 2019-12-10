@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :questions
   has_many :rewards
+  has_many :subscriptions, dependent: :destroy
   has_many :authorizations, dependent: :destroy
 
   def author_of?(model)

@@ -37,6 +37,13 @@ describe Ability, type: :model do
       it { should_not be_able_to :update, other_question }
     end
 
+    context 'question_subscription' do
+
+      it { should be_able_to :create, Subscription }
+      it { should be_able_to :destroy, user_question.subscriptions.find_by(user_id: user.id) }
+      it { should_not be_able_to :destroy, user_question.subscriptions.find_by(user_id: other.id) }
+    end
+
     context 'answer' do
       it { should be_able_to :create, Answer }
       it { should be_able_to :update, user_answer }
@@ -65,7 +72,6 @@ describe Ability, type: :model do
       let(:other_question) { create( :question, user: other) }
       it { should be_able_to :destroy, user_question }
       it { should_not be_able_to :destroy, other_question }
-
     end
   end
 end
