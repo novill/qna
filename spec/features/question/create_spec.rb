@@ -24,6 +24,7 @@ feature 'User can create question', %q{
       expect(page).to have_content 'Your question successfully created.'
       expect(page).to have_content 'Test question'
       expect(page).to have_content 'text text text'
+      expect(page).to have_link 'Unsubscribe'
     end
 
     scenario 'asks a question with errors' do

@@ -13,6 +13,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  after_create :send_subscription
+
   default_scope { order(best: :DESC) }
 
   def set_as_best
@@ -21,5 +23,9 @@ class Answer < ApplicationRecord
       question.reward&.update!(user: user)
     end
     reload
+  end
+
+  def send_subscription
+    Services::Subscription.new.send_subscription(self, question)
   end
 end

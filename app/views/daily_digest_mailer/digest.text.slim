@@ -1,0 +1,7 @@
+= @greeting + "\r\n"
+
+= 'Daily QnA question digest' "\r\n"
+
+- @last_day_questions.each do |question|
+  = question.title + " " + question_url(question.id) + "\r\n"*2
+

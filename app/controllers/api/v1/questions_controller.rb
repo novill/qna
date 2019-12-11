@@ -39,7 +39,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def destroy
     head :not_found and return unless @question
-    if @question.delete
+    if @question.destroy
       render json: @question, status: :accepted
     else
       render json: @question.errors, status: :unprocessable_entity
