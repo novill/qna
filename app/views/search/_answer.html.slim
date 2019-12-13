@@ -1,0 +1,5 @@
+p
+  'Answer for
+  = link_to "#{entity.question.title}", question_path(id: entity.question_id)
+p= entity.body
+p= "Author #{entity.user.email}"

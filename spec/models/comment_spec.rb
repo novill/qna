@@ -4,4 +4,16 @@ RSpec.describe Comment, type: :model do
   it { should belong_to :user }
   it { should belong_to :commentable }
   it { should validate_presence_of :body }
+  describe '#question' do
+    it "return question for question's commment" do
+      question = create(:question)
+      comment =create(:comment, commentable: question)
+      expect(comment.question).to eq(question)
+    end
+    it "return question for answer's commment" do
+      answer = create(:answer)
+      comment =create(:comment, commentable: answer)
+      expect(comment.question).to eq(answer.question)
+    end
+  end
 end

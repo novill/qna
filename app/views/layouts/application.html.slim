@@ -25,12 +25,17 @@ html lang="en"
         a.navbar-brand href="/"Qna
         .navbar-collapse.collapse.navbar-responsive-collapse
           ul.nav.navbar-nav
+            li= form_tag search_path, method: :get, class: 'navbar-form form-inline' do
+              .form-group
+                = text_field_tag :search_query, params[:search_query], placeholder: 'Search', class: 'form-control'
+                = select_tag :search_class, options_for_select(['Question', 'Answer', 'Comment', 'User'], params[:search_class]),
+                        prompt: 'All', class: 'selectpicker form-control'
+              = submit_tag 'Search', class: 'btn btn-default'
             - if user_signed_in?
               li= link_to 'Rewards', rewards_path
               li= link_to "Logout", destroy_user_session_path, method: :delete
             - else
               li= link_to "Sign in", new_user_session_path
-
     .container
       .row
         .col-lg-9
