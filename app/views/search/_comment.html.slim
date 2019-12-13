@@ -1,0 +1,6 @@
+p
+  'Comment in
+  - question = entity.question
+  = link_to question.title, question_path(id: question.id)
+p= entity.body
+p= "Author #{entity.user.email}"

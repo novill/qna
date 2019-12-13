@@ -1,0 +1,6 @@
+- if @result.empty?
+  p 'No results'
+- else
+  p
+    - @result.each do |entity|
+      = render "search/#{entity.class.name.downcase}", entity: entity
