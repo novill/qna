@@ -31,6 +31,7 @@ gem 'whenever', require: false
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'database_cleaner'
+gem 'mini_racer'
 
 
 group :development, :test do
