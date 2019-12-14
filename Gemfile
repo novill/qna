@@ -25,7 +25,7 @@ gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
-gem 'sidekiq'
+gem 'sidetiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
 gem 'mysql2'
@@ -45,6 +45,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
+  # gem 'capistrano-rbenv', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano-passenger', require: false
 
