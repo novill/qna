@@ -14,11 +14,12 @@
     ul
       = render @question.comments
 
-    = form_with url: question_comments_path(@question) do |f|
-      .field
-        = f.label :body, 'Comment body'
-        = f.text_field :body
-      = f.submit 'Save comment'
+    - if can?(:create, Comment)
+      = form_with url: question_comments_path(@question) do |f|
+        .field
+          = f.label :body, 'Comment body'
+          = f.text_field :body
+        = f.submit 'Save comment'
 
 - if can?(:update, @question)
   p= link_to 'Edit question', '#', class: 'edit-question-link'

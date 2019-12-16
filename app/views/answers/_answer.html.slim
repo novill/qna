@@ -18,12 +18,12 @@
     .comments
       ul
         = render answer.comments
-
-      = form_with url: answer_comments_path(answer) do |f|
-        .field
-          = f.label :body, 'Comment body'
-          = f.text_field :body
-        = f.submit 'Save comment'
+      -if can?(:create, Comment)
+        = form_with url: answer_comments_path(answer) do |f|
+          .field
+            = f.label :body, 'Comment body'
+            = f.text_field :body
+          = f.submit 'Save comment'
 
     div class="error-answer-#{answer.id}"
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
