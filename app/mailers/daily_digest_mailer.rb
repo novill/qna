@@ -10,6 +10,6 @@ class DailyDigestMailer < ApplicationMailer
     @last_day_questions = Question.where("created_at > ?", 1.day.ago)
 
 
-    mail to: user.email, subject: 'QnA question digest', from: 'noanswer@localhost'
+    mail to: user.email, subject: 'QnA question digest'
   end
 end
