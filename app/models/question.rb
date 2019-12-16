@@ -22,9 +22,9 @@ class Question < ApplicationRecord
 
   private
 
-  # def calculate_reputation
-  #   ReputationJob.perform_later(self)
-  # end
+  def calculate_reputation
+    ReputationJob.perform_later(self)
+  end
 
   def subscribe_author
     subscriptions.create(user: user)

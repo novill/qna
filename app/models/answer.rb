@@ -1,3 +1,5 @@
+require 'services/subscription'
+
 class Answer < ApplicationRecord
   include Votable
   include Commentable
