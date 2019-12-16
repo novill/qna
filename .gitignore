@@ -28,5 +28,7 @@
 /config/database.yml
 /config/*.sphinx.conf
 /db/sphinx
+/config/google-cred.json
+quickstart.rb
 
 .idea

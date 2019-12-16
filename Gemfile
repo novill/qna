@@ -35,6 +35,8 @@ gem 'mini_racer'
 gem 'to_words', require: false
 gem "betterlorem", require: false
 gem 'dotenv-rails'
+gem 'google-api-client'
+gem 'unicorn'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -50,6 +52,7 @@ group :development do
   # gem 'capistrano-rbenv', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano-unicorn', require: false
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
