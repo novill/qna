@@ -2,6 +2,6 @@ class QuestionMailer < ApplicationMailer
   def question_subscription(user, answer, question)
     @answer = answer
     @question = question
-    mail(to: user.email, subject: 'New answer for subscribed question', from: 'noanswer@localhost')
+    mail(to: user.email, subject: 'New answer for subscribed question', from: 'FoffAlex@gmail.com')
   end
 end
