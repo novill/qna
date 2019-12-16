@@ -1,5 +1,6 @@
 require 'to_words'
 require 'betterlorem'
+
 10.times do |i|
   password = (10**6 +rand(10**6)).to_s
   User.create_with(password: password, password_confirmation: password).find_or_create_by(email: "2alexeysh+test#{i}@gmail.com")
