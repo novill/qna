@@ -18,13 +18,13 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  after_create :calculate_reputation, :subscribe_author
+  after_create :subscribe_author
 
   private
 
-  def calculate_reputation
-    ReputationJob.perform_later(self)
-  end
+  # def calculate_reputation
+  #   ReputationJob.perform_later(self)
+  # end
 
   def subscribe_author
     subscriptions.create(user: user)
