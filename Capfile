@@ -11,7 +11,7 @@ require "capistrano/rails"
 require "capistrano/sidekiq"
 require "thinking_sphinx/capistrano"
 require "whenever/capistrano"
-require 'capistrano3/unicorn'
+require 'capistrano-unicorn'
 
 # Load the SCM plugin appropriate to your project:
 #
