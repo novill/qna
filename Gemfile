@@ -51,7 +51,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   # gem 'capistrano-rbenv', require: false
   gem 'capistrano-sidekiq', require: false
-  gem 'capistrano-passenger', require: false
+  # gem 'capistrano-passenger', require: false
   gem 'capistrano3-unicorn', require: false
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
