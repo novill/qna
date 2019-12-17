@@ -14,7 +14,6 @@ stdout_path "log/unicorn.stdout.log"
 worker_processes 2
 
 # use correct Gemfile on restarts
-ENV['RAILS_ENV'] = Rails.env
 before_exec do |server|
   ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
 end
