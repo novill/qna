@@ -3,15 +3,16 @@ require "capistrano/setup"
 
 # Include default deployment tasks
 require "capistrano/deploy"
-require "capistrano/rvm"
 require "capistrano/bundler"
+require "capistrano/rvm"
 require "capistrano/rails"
 # require "capistrano/passenger"
 # require 'capistrano/rbenv'
 require "capistrano/sidekiq"
 require "thinking_sphinx/capistrano"
 require "whenever/capistrano"
-require 'capistrano-unicorn'
+require 'capistrano/unicorn_nginx'
+
 
 # Load the SCM plugin appropriate to your project:
 #

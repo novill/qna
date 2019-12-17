@@ -83,6 +83,7 @@ GEM
       sshkit (>= 1.9.0)
     capistrano-bundler (1.6.0)
       capistrano (~> 3.1)
+    capistrano-deploy (0.0.2)
     capistrano-rails (1.4.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -92,8 +93,9 @@ GEM
     capistrano-sidekiq (1.0.2)
       capistrano (>= 3.9.0)
       sidekiq (>= 3.4)
-    capistrano-unicorn (0.1.10)
-      capistrano
+    capistrano-unicorn-nginx (5.2.0)
+      capistrano (>= 3.1)
+      sshkit (>= 1.2.0)
     capybara (3.29.0)
       addressable
       mini_mime (>= 0.1.3)
@@ -434,10 +436,11 @@ DEPENDENCIES
   cancancan
   capistrano
   capistrano-bundler
+  capistrano-deploy
   capistrano-rails
   capistrano-rvm
   capistrano-sidekiq
-  capistrano-unicorn
+  capistrano-unicorn-nginx
   capybara (>= 2.15)
   cocoon
   coffee-rails (~> 4.2)

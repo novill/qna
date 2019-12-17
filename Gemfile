@@ -49,11 +49,12 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
+  gem 'capistrano-deploy', require: false
   # gem 'capistrano-rbenv', require: false
   gem 'capistrano-sidekiq', require: false
   # gem 'capistrano-passenger', require: false
-  gem 'capistrano-unicorn', require: false
-
+  # gem 'capistrano-unicorn', require: false
+  gem 'capistrano-unicorn-nginx', require: false
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
