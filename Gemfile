@@ -37,6 +37,7 @@ gem "betterlorem", require: false
 gem 'dotenv-rails'
 gem 'google-api-client'
 gem 'unicorn'
+gem 'redis-rails'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

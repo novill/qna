@@ -1,29 +1,31 @@
-- if answer.persisted?
-  .answer [id = "answer-#{answer.id}"]
-    p.body= answer.body
-    p.files= render 'shared/files', resource: answer
-    .links= render 'shared/links', resource: answer
 
-    - if can?(:update, answer)
-      p= link_to 'Delete answer', answer, method: :delete, remote: true
-      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    - if answer.best
-      p= 'Best answer'
-    - else
-      - if current_user&.author_of?(answer.question)
-        p= link_to 'Mark as best', set_as_best_answer_path(id: answer.id), remote: true, method: :post
-      .vote_links= render 'shared/vote_links', resource: answer
-      p.answer_rating
-        = "Rating #{answer.rating}"
-    .comments
-      ul
-        = render answer.comments
-      -if can?(:create, Comment)
-        = form_with url: answer_comments_path(answer) do |f|
-          .field
-            = f.label :body, 'Comment body'
-            = f.text_field :body
-          = f.submit 'Save comment'
+- if answer.persisted?
+  - cache cache_key_for(answer) do
+    .answer [id = "answer-#{answer.id}"]
+      p.body= answer.body
+      p.files= render 'shared/files', resource: answer
+      .links= render 'shared/links', resource: answer
+
+      - if can?(:update, answer)
+        p= link_to 'Delete answer', answer, method: :delete, remote: true
+        p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      - if answer.best
+        p= 'Best answer'
+      - else
+        - if current_user&.author_of?(answer.question)
+          p= link_to 'Mark as best', set_as_best_answer_path(id: answer.id), remote: true, method: :post
+        .vote_links= render 'shared/vote_links', resource: answer
+        p.answer_rating
+          = "Rating #{answer.rating}"
+      .comments
+        ul
+          = render answer.comments
+        -if can?(:create, Comment)
+          = form_with url: answer_comments_path(answer) do |f|
+            .field
+              = f.label :body, 'Comment body'
+              = f.text_field :body
+            = f.submit 'Save comment'
 
     div class="error-answer-#{answer.id}"
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|

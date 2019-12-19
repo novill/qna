@@ -1,1 +1,2 @@
-li= "#{comment.body} - #{comment.user.email}"
+- cache comment do
+  li= "#{comment.body} -   #{comment.user.email}"

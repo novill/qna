@@ -16,7 +16,8 @@ module Qna
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     #
-    #
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+
     config.action_mailer.perform_caching = false
     config.action_mailer.default_url_options = { host: '167.172.102.203' }
     config.action_mailer.delivery_method = :smtp
