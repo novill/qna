@@ -1,24 +1,18 @@
-# README
+# Учебный проект "Вопросы и ответы"
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Для курса "Профессиональная разработка на RoR" по методологии TDD/BDD
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Используемые технологии и гемы
+- `Cancancan` - авторизация
+- `Devise` - аутентификация
+- `Sidekiq` - фоновые задачи
+- `Thinking-sphinx` - поиск
+- `Doorkeeper` - OAuth провайдер
+- `Omniauth` - аутентификация с помощью социальных сетей
+- `Slim` - шаблонизатор
+- `ActiveStorage` - хранение файлов
+- `ActionCable` - обмен сообщениями
+- `Capistrano` - деплой
+- Тестирование
+  - `RSpec`
+  - `Capybara`
