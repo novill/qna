@@ -7,7 +7,9 @@ $(document).on('turbolinks:load', function(){
 
   $('.question ').on('ajax:success', function (e) {
     var details = e.detail[0];
-    $('p.question_rating').html('Rating ' + details['rating']);
+    if (details['rating']) {
+      $('p.question_rating').html('Rating ' + details['rating']);
+    };
     if (details['current_user_voted']) {
       $('.question a.vote_back').removeClass('hidden');
       $('.question a.vote').addClass('hidden');

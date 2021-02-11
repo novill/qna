@@ -17,4 +17,12 @@ RSpec.describe Answer, type: :model do
   it_behaves_like 'votable' do
     let(:resource) { create(:answer) }
   end
+
+  it "should touch the parent object" do
+    question = create(:question)
+    question.should_receive(:touch)
+    sleep(0.0001)
+    create(:answer, question: question)
+  end
+
 end

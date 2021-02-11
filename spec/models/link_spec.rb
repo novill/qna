@@ -27,5 +27,11 @@ RSpec.describe Link, type: :model do
     end
   end
 
+  it "should touch the parent object" do
+    question = create(:question)
+    question.should_receive(:touch)
+    sleep(0.0001)
+    create(:link, linkable: question)
+  end
 
 end

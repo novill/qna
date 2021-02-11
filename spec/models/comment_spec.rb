@@ -15,5 +15,12 @@ RSpec.describe Comment, type: :model do
       comment =create(:comment, commentable: answer)
       expect(comment.question).to eq(answer.question)
     end
+
+    it "should touch the parent object" do
+      commentable =  create(:question)
+      commentable.should_receive(:touch)
+      sleep(0.0001)
+      create(:comment, commentable: commentable )
+    end
   end
 end
